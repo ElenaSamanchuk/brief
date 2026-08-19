@@ -207,7 +207,7 @@
   <header>
     <div class="eyebrow">Внутренний инструмент · не для клиента</div>
     <h1>Калькулятор стоимости проекта</h1>
-    <p class="subhead">Отмечай ответы клиента из брифа — справа сразу считается ориентировочная стоимость в рублях. Цифры основаны на среднерыночных ставках в РФ на 2026 год, конкурентно, но с адекватной маржой.</p>
+    <p class="subhead">Отмечай ответы клиента из брифа — справа сразу считается ориентировочная стоимость в рублях. Ставки рассчитаны на уровень крепкого частного специалиста (фриланс), а не агентства — конкурентно на рынке РФ 2026.</p>
   </header>
 
   <div class="layout">
@@ -273,61 +273,61 @@
 </div>
 
 <script>
-// ---- PRICING MODEL ----
+// ---- PRICING MODEL (фриланс-ставки РФ, средний уровень 2026) ----
 // Base by site type (single-select)
 const TYPES = [
-  { id:'landing', label:'Лендинг (одностраничник)', price:45000 },
-  { id:'catalog', label:'Каталог товаров / услуг', price:90000 },
-  { id:'portfolio', label:'Портфолио / визитка', price:35000 },
-  { id:'shop', label:'Интернет-магазин', price:150000 },
-  { id:'service', label:'Сервис / личный кабинет', price:180000 },
-  { id:'blog', label:'Информационный сайт / блог', price:60000 },
+  { id:'landing', label:'Лендинг (одностраничник)', price:18000 },
+  { id:'catalog', label:'Каталог товаров / услуг', price:35000 },
+  { id:'portfolio', label:'Портфолио / визитка', price:15000 },
+  { id:'shop', label:'Интернет-магазин', price:60000 },
+  { id:'service', label:'Сервис / личный кабинет', price:90000 },
+  { id:'blog', label:'Информационный сайт / блог', price:20000 },
 ];
 
 const DESIGN = [
   { id:'template', label:'Готовый шаблон / конструктор', mult:1.0, note:'входит в базу' },
-  { id:'custom', label:'Уникальный дизайн с нуля', mult:1.4, note:'+40%' },
+  { id:'custom', label:'Уникальный дизайн с нуля', mult:1.3, note:'+30%' },
 ];
 
 const PAGES = [
   { id:'p_base', label:'В рамках базового пакета (до 5 стр.)', price:0 },
-  { id:'p_6_15', label:'6–15 страниц', price:25000 },
-  { id:'p_15plus', label:'15+ страниц', price:60000 },
+  { id:'p_6_15', label:'6–15 страниц', price:12000 },
+  { id:'p_15plus', label:'15+ страниц', price:28000 },
 ];
 
 const FEATURES = [
-  { id:'cart', label:'Каталог/корзина', price:45000 },
-  { id:'payment', label:'Онлайн-оплата', price:40000 },
-  { id:'cabinet', label:'Личный кабинет', price:70000 },
-  { id:'form', label:'Форма заявки (расширенная)', price:8000 },
-  { id:'blog_module', label:'Блог/новости', price:15000 },
-  { id:'multilang', label:'Многоязычность', price:25000 },
-  { id:'crm', label:'Интеграция CRM/1С', price:35000 },
-  { id:'booking', label:'Онлайн-запись', price:30000 },
-  { id:'seo', label:'Базовая SEO-оптимизация', price:20000 },
+  { id:'cart', label:'Каталог/корзина', price:20000 },
+  { id:'payment', label:'Онлайн-оплата', price:15000 },
+  { id:'cabinet', label:'Личный кабинет', price:30000 },
+  { id:'form', label:'Форма заявки (расширенная)', price:4000 },
+  { id:'blog_module', label:'Блог/новости', price:8000 },
+  { id:'multilang', label:'Многоязычность', price:12000 },
+  { id:'crm', label:'Интеграция CRM/1С', price:18000 },
+  { id:'booking', label:'Онлайн-запись', price:15000 },
+  { id:'seo', label:'Базовая SEO-оптимизация', price:10000 },
 ];
 
 const PLATFORM = [
   { id:'wp', label:'WordPress / готовая CMS', price:0 },
-  { id:'tilda', label:'Tilda / конструктор', price:-10000 },
-  { id:'custom_stack', label:'Самописное решение', price:60000 },
+  { id:'tilda', label:'Tilda / конструктор', price:-5000 },
+  { id:'custom_stack', label:'Самописное решение', price:30000 },
   { id:'undecided', label:'На усмотрение разработчика', price:0 },
 ];
 
 const CONTENT = [
   { id:'ready', label:'Всё готово (тексты, фото)', price:0 },
-  { id:'partial', label:'Частично готово', price:15000 },
-  { id:'none', label:'Нужна помощь с наполнением', price:35000 },
+  { id:'partial', label:'Частично готово', price:7000 },
+  { id:'none', label:'Нужна помощь с наполнением', price:18000 },
 ];
 
 const URGENCY = [
-  { id:'normal', label:'Стандартный срок (3–6 недель)', mult:1.0 },
-  { id:'fast', label:'Срочно (менее 2 недель)', mult:1.25, note:'+25%' },
+  { id:'normal', label:'Стандартный срок (2–4 недели)', mult:1.0 },
+  { id:'fast', label:'Срочно (менее 1 недели)', mult:1.3, note:'+30%' },
 ];
 
 const SUPPORT = [
   { id:'none', label:'Без сопровождения', price:0 },
-  { id:'monthly', label:'Сопровождение (ежемесячно, first 3 мес.)', price:45000 },
+  { id:'monthly', label:'Сопровождение (ежемесячно, first 3 мес.)', price:12000 },
 ];
 
 // ---- STATE ----
