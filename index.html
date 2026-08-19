@@ -2,7 +2,10 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="Бриф на разработку сайта — заполните форму за 3-4 минуты, заявка сразу попадёт в работу.">
+<meta name="theme-color" content="#0a0b0d" id="metaThemeColor">
+<meta name="robots" content="noindex, nofollow">
 <title>Бриф на разработку сайта</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -15,10 +18,28 @@
     --text: #e9eaec;
     --text-dim: #8a8f9c;
     --text-faint: #4d515c;
-    --accent: #5eead4;
+    --accent: #0d9488;
+    --accent-text: #5eead4;
     --accent-dim: #163c37;
     --error: #f87171;
     --radius: 3px;
+    --input-bg: #0d0e12;
+    --input-bg-focus: #0f1116;
+  }
+  html[data-theme="light"]{
+    --bg: #f7f7f5;
+    --bg-elevated: #ffffff;
+    --border: #e2e2df;
+    --border-hover: #c9c9c4;
+    --text: #16181c;
+    --text-dim: #5c6370;
+    --text-faint: #9a9da5;
+    --accent: #0d9488;
+    --accent-text: #0d9488;
+    --accent-dim: #e6f7f4;
+    --error: #dc2626;
+    --input-bg: #fbfbfa;
+    --input-bg-focus: #ffffff;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
@@ -33,19 +54,52 @@
     padding:0 20px;
     position:relative;
     overflow-x:hidden;
+    transition:background 0.25s, color 0.25s;
   }
   body::before{
     content:'';
     position:fixed;
     inset:0;
     background-image:
-      linear-gradient(rgba(94,234,212,0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(94,234,212,0.025) 1px, transparent 1px);
+      linear-gradient(rgba(13,148,136,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(13,148,136,0.05) 1px, transparent 1px);
     background-size:48px 48px;
     pointer-events:none;
     mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black, transparent 70%);
   }
+  html[data-theme="light"] body::before{
+    background-image:
+      linear-gradient(rgba(13,148,136,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(13,148,136,0.06) 1px, transparent 1px);
+  }
   .mono{font-family:'JetBrains Mono', monospace;}
+
+  /* THEME TOGGLE */
+  .theme-toggle{
+    position:fixed;
+    top:20px; right:20px;
+    z-index:10;
+    display:flex;
+    gap:2px;
+    background:var(--bg-elevated);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:3px;
+  }
+  .theme-btn{
+    width:30px; height:30px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background:transparent;
+    border:none;
+    cursor:pointer;
+    color:var(--text-dim);
+    transition: background 0.15s, color 0.15s;
+    padding:0;
+  }
+  .theme-btn:hover{color:var(--text);}
+  .theme-btn.active{background:var(--accent-dim); color:var(--accent-text);}
+  .theme-btn svg{width:16px; height:16px;}
 
   /* HEADER */
   .app{width:100%; max-width:640px; display:flex; flex-direction:column; min-height:100vh; position:relative; z-index:1;}
@@ -54,14 +108,14 @@
     font-family:'JetBrains Mono', monospace;
     font-size:12px;
     letter-spacing:0.12em;
-    color:var(--accent);
+    color:var(--accent-text);
     text-transform:uppercase;
     display:flex;
     align-items:center;
     gap:8px;
     margin-bottom:14px;
   }
-  .eyebrow::before{content:''; width:6px; height:6px; background:var(--accent); border-radius:50%; box-shadow:0 0 8px var(--accent);}
+  .eyebrow::before{content:''; width:6px; height:6px; background:var(--accent-text); border-radius:50%; box-shadow:0 0 8px var(--accent-text);}
   h1{
     font-size:clamp(28px, 5vw, 38px);
     font-weight:700;
@@ -82,8 +136,8 @@
   }
   .progress-fill{
     height:100%;
-    background:var(--accent);
-    box-shadow:0 0 10px var(--accent);
+    background:var(--accent-text);
+    box-shadow:0 0 10px var(--accent-text);
     transition:width 0.5s cubic-bezier(.65,0,.35,1);
     border-radius:2px;
   }
@@ -107,6 +161,7 @@
     padding:32px 28px;
     position:relative;
     animation: fadeSlideIn 0.45s cubic-bezier(.2,.9,.3,1);
+    transition:background 0.25s, border-color 0.25s;
   }
   @keyframes fadeSlideIn{
     from{opacity:0; transform:translateY(10px);}
@@ -115,11 +170,12 @@
   .step-num{
     font-family:'JetBrains Mono', monospace;
     font-size:12px;
-    color:var(--accent);
+    color:var(--accent-text);
     letter-spacing:0.1em;
     margin-bottom:6px;
   }
   .step-title{font-size:21px; font-weight:600; letter-spacing:-0.01em; margin-bottom:24px;}
+  .step-sub{font-size:13px; color:var(--text-dim); margin-top:-16px; margin-bottom:24px;}
 
   .field{margin-bottom:22px;}
   .field:last-child{margin-bottom:0;}
@@ -131,9 +187,10 @@
     font-weight:500;
   }
   .field label .opt{color:var(--text-faint); font-weight:400;}
+  .field label .req{color:var(--error); font-weight:600;}
   input[type=text], input[type=tel], input[type=email], textarea{
     width:100%;
-    background:#0d0e12;
+    background:var(--input-bg);
     border:1px solid var(--border);
     border-radius:var(--radius);
     color:var(--text);
@@ -147,8 +204,8 @@
   input::placeholder, textarea::placeholder{color:var(--text-faint);}
   input:focus, textarea:focus{
     outline:none;
-    border-color:var(--accent);
-    background:#0f1116;
+    border-color:var(--accent-text);
+    background:var(--input-bg-focus);
   }
 
   .chip-group{display:flex; flex-wrap:wrap; gap:8px;}
@@ -165,10 +222,11 @@
     background:transparent;
   }
   .chip:hover{border-color:var(--border-hover); color:var(--text);}
+  .chip:focus-visible{outline:2px solid var(--accent-text); outline-offset:2px;}
   .chip.active{
     background:var(--accent-dim);
-    border-color:var(--accent);
-    color:var(--accent);
+    border-color:var(--accent-text);
+    color:var(--accent-text);
   }
 
   .radio-group{display:flex; flex-direction:column; gap:8px;}
@@ -183,7 +241,8 @@
     transition:border-color 0.15s, background 0.15s;
   }
   .radio-row:hover{border-color:var(--border-hover);}
-  .radio-row.active{border-color:var(--accent); background:var(--accent-dim);}
+  .radio-row:focus-visible{outline:2px solid var(--accent-text); outline-offset:2px;}
+  .radio-row.active{border-color:var(--accent-text); background:var(--accent-dim);}
   .radio-dot{
     width:15px; height:15px; border-radius:50%;
     border:1.5px solid var(--text-faint);
@@ -191,11 +250,11 @@
     position:relative;
     transition:border-color 0.15s;
   }
-  .radio-row.active .radio-dot{border-color:var(--accent);}
+  .radio-row.active .radio-dot{border-color:var(--accent-text);}
   .radio-row.active .radio-dot::after{
     content:'';
     position:absolute; inset:3px;
-    background:var(--accent);
+    background:var(--accent-text);
     border-radius:50%;
   }
   .radio-row span{font-size:14.5px; color:var(--text);}
@@ -220,15 +279,16 @@
   }
   button:active{transform:scale(0.97);}
   .btn-primary{
-    background:var(--accent);
-    color:#04140f;
+    background:var(--accent-text);
+    color:var(--bg);
     flex:1;
     display:flex;
     align-items:center;
     justify-content:center;
     gap:8px;
   }
-  .btn-primary:hover{box-shadow:0 0 20px rgba(94,234,212,0.25);}
+  html[data-theme="light"] .btn-primary{ color:#ffffff; }
+  .btn-primary:hover{box-shadow:0 0 20px rgba(13,148,136,0.3);}
   .btn-primary:disabled{opacity:0.4; cursor:not-allowed; box-shadow:none;}
   .btn-ghost{
     background:transparent;
@@ -250,10 +310,10 @@
   .success-icon{
     width:64px; height:64px;
     border-radius:50%;
-    border:1.5px solid var(--accent);
+    border:1.5px solid var(--accent-text);
     display:flex; align-items:center; justify-content:center;
     margin-bottom:24px;
-    box-shadow:0 0 30px rgba(94,234,212,0.15);
+    box-shadow:0 0 30px rgba(13,148,136,0.2);
   }
   .success h2{font-size:24px; margin-bottom:10px; letter-spacing:-0.01em;}
   .success p{color:var(--text-dim); font-size:14.5px; max-width:360px; line-height:1.55;}
@@ -276,37 +336,60 @@
 
   .spinner{
     width:16px; height:16px;
-    border:2px solid rgba(4,20,15,0.3);
-    border-top-color:#04140f;
+    border:2px solid rgba(0,0,0,0.2);
+    border-top-color:currentColor;
     border-radius:50%;
     animation:spin 0.7s linear infinite;
   }
   @keyframes spin{to{transform:rotate(360deg);}}
 
   @media(max-width:480px){
-    .card{padding:26px 20px;}
-    header{padding:36px 0 22px;}
+    .card{padding:24px 18px;}
+    header{padding:56px 0 20px;}
+    .theme-toggle{top:14px; right:14px;}
+    h1{font-size:26px;}
+    .subhead{font-size:14px;}
+    .nav-row{flex-direction:row; gap:10px;}
+    .btn-ghost{padding:13px 16px;}
+    .step-title{font-size:19px; margin-bottom:20px;}
+  }
+  @media(max-width:360px){
+    .chip{font-size:12px; padding:8px 12px;}
+    .radio-row span{font-size:13.5px;}
+    h1{font-size:23px;}
+  }
+  @media(prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
   }
 </style>
 </head>
 <body>
 
+<div class="theme-toggle" id="themeToggle">
+  <button class="theme-btn" data-theme="dark" title="Тёмная тема">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
+  <button class="theme-btn" data-theme="light" title="Светлая тема">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+  </button>
+</div>
+
 <div class="app">
   <header>
     <div class="eyebrow">Приём проекта</div>
     <h1>Бриф на разработку сайта</h1>
-    <p class="subhead">7 коротких шагов — примерно 3 минуты. Ответы уходят напрямую в работу, дублировать по почте не нужно.</p>
+    <p class="subhead">8 коротких шагов — примерно 4 минуты. Обязательны только отмеченные <span style="color:var(--error)">*</span> поля — остальное можно пропустить, но чем больше заполните, тем точнее будет оценка проекта.</p>
   </header>
 
   <div class="progress-wrap">
-    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:14.3%"></div></div>
+    <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="12" id="progressTrack"><div class="progress-fill" id="progressFill" style="width:12.5%"></div></div>
     <div class="progress-meta">
-      <span class="step-label" id="stepLabel">Шаг 1 из 7</span>
-      <span id="stepPercent">14%</span>
+      <span class="step-label" id="stepLabel">Шаг 1 из 8</span>
+      <span id="stepPercent">13%</span>
     </div>
   </div>
 
-  <main id="mainArea">
+  <main id="mainArea" aria-live="polite">
     <!-- steps injected here -->
   </main>
 
@@ -315,38 +398,47 @@
 
 <script>
 const BOT_TOKEN = "8837687987:AAHJdF3PDfQ2ss3pXGuhDI8Fp1YBza68GYU";
-const CHAT_ID = "747866764";
+const CHAT_ID = "-1002778567348";
 
 const state = {
   name:'', contact_type:'Telegram', contact:'',
-  company:'', goal:'', current_site:'',
+  company:'', goal:'', goal_other:'', current_site:'',
   pages:'', design_pref:'', references:'',
-  features:[], integrations:'',
-  content_ready:'', budget:'', deadline:'',
+  features:[], features_other:'', integrations:'',
+  content_ready:'',
+  domain_status:'', tech_stack:'', tech_stack_other:'',
+  decision_maker:'', support_pref:'', seo_needed:'', workflow_pref:'',
+  budget:'', budget_other:'', deadline:'',
   comment:''
 };
 
+function esc(s){
+  return (s||'').toString()
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
 const steps = [
+  // 1. Кто вы
   {
     title:'Кто вы',
     render: () => `
       <div class="field">
-        <label>Имя</label>
-        <input type="text" id="f_name" placeholder="Как к вам обращаться" value="${state.name}">
+        <label>Имя <span class="req">*</span></label>
+        <input type="text" id="f_name" placeholder="Как к вам обращаться" value="${esc(state.name)}">
       </div>
       <div class="field">
         <label>Компания / проект <span class="opt">(необязательно)</span></label>
-        <input type="text" id="f_company" placeholder="Название" value="${state.company}">
+        <input type="text" id="f_company" placeholder="Название" value="${esc(state.company)}">
       </div>
       <div class="field">
         <label>Удобная связь</label>
         <div class="chip-group" id="f_contact_type">
-          ${['Telegram','WhatsApp','Телефон','Email'].map(c=>`<div class="chip ${state.contact_type===c?'active':''}" data-val="${c}">${c}</div>`).join('')}
+          ${['Telegram','WhatsApp','Телефон','Email'].map(c=>`<div tabindex="0" role="button" class="chip ${state.contact_type===c?'active':''}" data-val="${c}">${c}</div>`).join('')}
         </div>
       </div>
       <div class="field">
-        <label>Контакт</label>
-        <input type="text" id="f_contact" placeholder="@username, номер или email" value="${state.contact}">
+        <label>Контакт <span class="req">*</span></label>
+        <input type="text" id="f_contact" placeholder="@username, номер или email" value="${esc(state.contact)}">
       </div>
     `,
     save: () => {
@@ -354,8 +446,9 @@ const steps = [
       state.company = val('f_company');
       state.contact = val('f_contact');
     },
-    valid: () => state.name.trim() && state.contact.trim()
+    valid: () => state.name.trim().length >= 2 && state.contact.trim().length >= 3
   },
+  // 2. Цель сайта
   {
     title:'Цель сайта',
     render: () => `
@@ -363,62 +456,75 @@ const steps = [
         <label>Зачем нужен сайт</label>
         <div class="radio-group" id="f_goal">
           ${['Продажи / заявки','Каталог товаров','Портфолио / визитка','Информационный / блог','Сервис / личный кабинет','Другое'].map(g=>`
-            <div class="radio-row ${state.goal===g?'active':''}" data-val="${g}">
+            <div tabindex="0" role="radio" class="radio-row ${state.goal===g?'active':''}" data-val="${g}">
               <div class="radio-dot"></div><span>${g}</span>
             </div>`).join('')}
         </div>
       </div>
+      ${state.goal==='Другое' ? `
+      <div class="field">
+        <label>Уточните</label>
+        <input type="text" id="f_goal_other" placeholder="Опишите своими словами" value="${esc(state.goal_other)}">
+      </div>` : ''}
       <div class="field">
         <label>Сайт сейчас есть? <span class="opt">(ссылка, если да)</span></label>
-        <input type="text" id="f_current" placeholder="example.com или «нет»" value="${state.current_site}">
+        <input type="text" id="f_current" placeholder="example.com или «нет»" value="${esc(state.current_site)}">
       </div>
     `,
-    save: () => { state.current_site = val('f_current'); },
-    valid: () => !!state.goal
+    save: () => { state.current_site = val('f_current'); state.goal_other = val('f_goal_other'); },
+    valid: () => true
   },
+  // 3. Объём и стиль
   {
     title:'Объём и стиль',
     render: () => `
       <div class="field">
         <label>Сколько страниц примерно</label>
         <div class="chip-group" id="f_pages">
-          ${['Одна (лендинг)','2–5','6–15','15+','Не знаю'].map(p=>`<div class="chip ${state.pages===p?'active':''}" data-val="${p}">${p}</div>`).join('')}
+          ${['Одна (лендинг)','2–5','6–15','15+','Не знаю'].map(p=>`<div tabindex="0" role="button" class="chip ${state.pages===p?'active':''}" data-val="${p}">${p}</div>`).join('')}
         </div>
       </div>
       <div class="field">
         <label>Дизайн</label>
         <div class="radio-group" id="f_design">
           ${['Уникальный дизайн с нуля','Готовый шаблон / конструктор','Пока не решил(а)'].map(d=>`
-            <div class="radio-row ${state.design_pref===d?'active':''}" data-val="${d}">
+            <div tabindex="0" role="radio" class="radio-row ${state.design_pref===d?'active':''}" data-val="${d}">
               <div class="radio-dot"></div><span>${d}</span>
             </div>`).join('')}
         </div>
       </div>
       <div class="field">
         <label>Референсы <span class="opt">(сайты, которые нравятся)</span></label>
-        <textarea id="f_refs" placeholder="Ссылки или описание стиля">${state.references}</textarea>
+        <textarea id="f_refs" placeholder="Ссылки или описание стиля">${esc(state.references)}</textarea>
       </div>
     `,
     save: () => { state.references = val('f_refs'); },
     valid: () => true
   },
+  // 4. Функционал
   {
     title:'Функционал',
     render: () => `
       <div class="field">
         <label>Что должно быть на сайте <span class="opt">(можно несколько)</span></label>
         <div class="chip-group" id="f_features">
-          ${['Каталог/корзина','Онлайн-оплата','Личный кабинет','Форма заявки','Блог/новости','Многоязычность','Интеграция с CRM','Онлайн-запись'].map(f=>`<div class="chip ${state.features.includes(f)?'active':''}" data-val="${f}">${f}</div>`).join('')}
+          ${['Каталог/корзина','Онлайн-оплата','Личный кабинет','Форма заявки','Блог/новости','Многоязычность','Интеграция с CRM','Онлайн-запись','Другое'].map(f=>`<div tabindex="0" role="button" class="chip ${state.features.includes(f)?'active':''}" data-val="${f}">${f}</div>`).join('')}
         </div>
       </div>
+      ${state.features.includes('Другое') ? `
+      <div class="field">
+        <label>Уточните</label>
+        <input type="text" id="f_features_other" placeholder="Какой ещё функционал нужен" value="${esc(state.features_other)}">
+      </div>` : ''}
       <div class="field">
         <label>Интеграции <span class="opt">(CRM, платёжка, аналитика — если известно)</span></label>
-        <input type="text" id="f_integrations" placeholder="Например: Bitrix24, ЮKassa" value="${state.integrations}">
+        <input type="text" id="f_integrations" placeholder="Например: Bitrix24, ЮKassa" value="${esc(state.integrations)}">
       </div>
     `,
-    save: () => { state.integrations = val('f_integrations'); },
+    save: () => { state.integrations = val('f_integrations'); state.features_other = val('f_features_other'); },
     valid: () => true
   },
+  // 5. Контент
   {
     title:'Контент',
     render: () => `
@@ -426,38 +532,103 @@ const steps = [
         <label>Тексты, фото, логотип — готовы?</label>
         <div class="radio-group" id="f_content">
           ${['Всё готово','Частично готово','Нужна помощь с наполнением'].map(c=>`
-            <div class="radio-row ${state.content_ready===c?'active':''}" data-val="${c}">
+            <div tabindex="0" role="radio" class="radio-row ${state.content_ready===c?'active':''}" data-val="${c}">
               <div class="radio-dot"></div><span>${c}</span>
             </div>`).join('')}
         </div>
       </div>
     `,
     save: () => {},
-    valid: () => !!state.content_ready
+    valid: () => true
   },
+  // 6. Технические и организационные детали (NEW)
+  {
+    title:'Техническое и процесс',
+    render: () => `
+      <div class="field">
+        <label>Домен и хостинг</label>
+        <div class="radio-group" id="f_domain">
+          ${['Есть домен и хостинг','Есть только домен','Ничего нет — нужна помощь'].map(d=>`
+            <div tabindex="0" role="radio" class="radio-row ${state.domain_status===d?'active':''}" data-val="${d}">
+              <div class="radio-dot"></div><span>${d}</span>
+            </div>`).join('')}
+        </div>
+      </div>
+      <div class="field">
+        <label>Платформа / CMS</label>
+        <div class="chip-group" id="f_techstack">
+          ${['WordPress','Tilda','Самописное решение','На усмотрение разработчика','Другое'].map(t=>`<div tabindex="0" role="button" class="chip ${state.tech_stack===t?'active':''}" data-val="${t}">${t}</div>`).join('')}
+        </div>
+      </div>
+      ${state.tech_stack==='Другое' ? `
+      <div class="field">
+        <label>Уточните платформу</label>
+        <input type="text" id="f_techstack_other" placeholder="Какая CMS или технология" value="${esc(state.tech_stack_other)}">
+      </div>` : ''}
+      <div class="field">
+        <label>Кто принимает решения по проекту</label>
+        <div class="radio-group" id="f_decision">
+          ${['Я один(а) согласовываю','Нужно согласование с командой/руководством'].map(d=>`
+            <div tabindex="0" role="radio" class="radio-row ${state.decision_maker===d?'active':''}" data-val="${d}">
+              <div class="radio-dot"></div><span>${d}</span>
+            </div>`).join('')}
+        </div>
+      </div>
+      <div class="field">
+        <label>Нужна ли базовая SEO-оптимизация на старте</label>
+        <div class="chip-group" id="f_seo">
+          ${['Да','Нет','Не знаю, посоветуйте'].map(s=>`<div tabindex="0" role="button" class="chip ${state.seo_needed===s?'active':''}" data-val="${s}">${s}</div>`).join('')}
+        </div>
+      </div>
+      <div class="field">
+        <label>Формат оплаты</label>
+        <div class="radio-group" id="f_support">
+          ${['Разовая оплата за проект','Разовая + сопровождение после сдачи'].map(s=>`
+            <div tabindex="0" role="radio" class="radio-row ${state.support_pref===s?'active':''}" data-val="${s}">
+              <div class="radio-dot"></div><span>${s}</span>
+            </div>`).join('')}
+        </div>
+      </div>
+      <div class="field">
+        <label>Удобный формат общения по проекту</label>
+        <div class="chip-group" id="f_workflow">
+          ${['Созвоны','Переписка (мессенджер)','Email','Как удобнее вам'].map(w=>`<div tabindex="0" role="button" class="chip ${state.workflow_pref===w?'active':''}" data-val="${w}">${w}</div>`).join('')}
+        </div>
+      </div>
+    `,
+    save: () => { state.tech_stack_other = val('f_techstack_other'); },
+    valid: () => true
+  },
+  // 7. Бюджет и сроки
   {
     title:'Бюджет и сроки',
     render: () => `
       <div class="field">
-        <label>Бюджет</label>
+        <label>Бюджет <span class="req">*</span></label>
         <div class="chip-group" id="f_budget">
-          ${['до 100 000 ₽','100–300 000 ₽','300–700 000 ₽','700 000+ ₽','Обсудим'].map(b=>`<div class="chip ${state.budget===b?'active':''}" data-val="${b}">${b}</div>`).join('')}
+          ${['до 100 000 ₽','100–300 000 ₽','300–700 000 ₽','700 000+ ₽','Обсудим','Другое'].map(b=>`<div tabindex="0" role="button" class="chip ${state.budget===b?'active':''}" data-val="${b}">${b}</div>`).join('')}
         </div>
       </div>
+      ${state.budget==='Другое' ? `
       <div class="field">
-        <label>Желаемый срок запуска</label>
-        <input type="text" id="f_deadline" placeholder="Например: до 15 октября или «не горит»" value="${state.deadline}">
+        <label>Уточните</label>
+        <input type="text" id="f_budget_other" placeholder="Ваш вариант" value="${esc(state.budget_other)}">
+      </div>` : ''}
+      <div class="field">
+        <label>Желаемый срок запуска <span class="req">*</span></label>
+        <input type="text" id="f_deadline" placeholder="Например: до 15 октября или «не горит»" value="${esc(state.deadline)}">
       </div>
     `,
-    save: () => { state.deadline = val('f_deadline'); },
-    valid: () => true
+    save: () => { state.deadline = val('f_deadline'); state.budget_other = val('f_budget_other'); },
+    valid: () => !!state.budget && state.deadline.trim() && (state.budget!=='Другое' || state.budget_other.trim())
   },
+  // 8. Последнее
   {
     title:'Последнее',
     render: () => `
       <div class="field">
         <label>Комментарий <span class="opt">(всё, что важно добавить)</span></label>
-        <textarea id="f_comment" placeholder="Свободное поле" style="min-height:120px;">${state.comment}</textarea>
+        <textarea id="f_comment" placeholder="Свободное поле" style="min-height:120px;">${esc(state.comment)}</textarea>
       </div>
     `,
     save: () => { state.comment = val('f_comment'); },
@@ -479,6 +650,7 @@ function renderStep(){
   progressFill.style.width = pct + '%';
   stepLabel.textContent = `Шаг ${current+1} из ${steps.length}`;
   stepPercent.textContent = pct + '%';
+  document.getElementById('progressTrack').setAttribute('aria-valuenow', pct);
 
   const isLast = current === steps.length - 1;
 
@@ -491,11 +663,12 @@ function renderStep(){
         <button class="btn-ghost" id="btnBack" ${current===0?'disabled':''}>Назад</button>
         <button class="btn-primary" id="btnNext">${isLast ? 'Отправить бриф' : 'Далее'}</button>
       </div>
-      <div class="error-msg" id="errorMsg" style="display:none;"></div>
+      <div class="error-msg" id="errorMsg" role="alert" aria-live="assertive" style="display:none;"></div>
     </div>
   `;
 
   wireInteractive();
+  syncAriaStates();
 
   document.getElementById('btnBack').onclick = () => {
     s.save();
@@ -504,34 +677,72 @@ function renderStep(){
   document.getElementById('btnNext').onclick = () => handleNext(s, isLast);
 }
 
+function syncAriaStates(){
+  document.querySelectorAll('.radio-row').forEach(row => {
+    row.setAttribute('aria-checked', row.classList.contains('active') ? 'true' : 'false');
+  });
+  document.querySelectorAll('.chip').forEach(chip => {
+    chip.setAttribute('aria-pressed', chip.classList.contains('active') ? 'true' : 'false');
+  });
+}
+
 function wireInteractive(){
-  // chip groups (multi or single depending on field)
+  const s = steps[current];
+
+  // keyboard support: Enter/Space triggers click on focused chip/radio-row
+  document.querySelectorAll('.chip, .radio-row').forEach(el => {
+    el.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        el.click();
+      }
+    });
+  });
+
+  // single-select chip groups (rerender not needed unless they gate a field)
+  const singleSelectChipsRerender = ['f_budget','f_techstack','f_seo'];
+  const singleSelectChipsNoRerender = ['f_contact_type','f_pages'];
+
   document.querySelectorAll('.chip-group').forEach(group => {
     const id = group.id;
     group.querySelectorAll('.chip').forEach(chip => {
       chip.onclick = () => {
         const v = chip.dataset.val;
-        if(id === 'f_contact_type'){
-          state.contact_type = v;
-          group.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
-          chip.classList.add('active');
-        } else if(id === 'f_pages'){
-          state.pages = v;
-          group.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
-          chip.classList.add('active');
-        } else if(id === 'f_budget'){
-          state.budget = v;
-          group.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
-          chip.classList.add('active');
-        } else if(id === 'f_features'){
+
+        if(id === 'f_contact_type'){ state.contact_type = v; }
+        else if(id === 'f_pages'){ state.pages = v; }
+        else if(id === 'f_budget'){ state.budget = v; }
+        else if(id === 'f_techstack'){ state.tech_stack = v; }
+        else if(id === 'f_seo'){ state.seo_needed = v; }
+        else if(id === 'f_workflow'){ state.workflow_pref = v; }
+        else if(id === 'f_features'){
           if(state.features.includes(v)){
             state.features = state.features.filter(x=>x!==v);
-            chip.classList.remove('active');
           } else {
             state.features.push(v);
-            chip.classList.add('active');
           }
         }
+
+        if(id === 'f_features'){
+          const rerenderNeeded = (v === 'Другое');
+          if(rerenderNeeded){ s.save(); renderStep(); return; }
+          group.querySelectorAll('.chip').forEach(c=>{
+            c.classList.toggle('active', state.features.includes(c.dataset.val));
+          });
+          syncAriaStates();
+          return;
+        }
+
+        if(singleSelectChipsRerender.includes(id)){
+          s.save();
+          renderStep();
+          return;
+        }
+
+        // simple single-select, no rerender needed
+        group.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+        chip.classList.add('active');
+        syncAriaStates();
       };
     });
   });
@@ -542,11 +753,18 @@ function wireInteractive(){
     group.querySelectorAll('.radio-row').forEach(row => {
       row.onclick = () => {
         const v = row.dataset.val;
-        if(id === 'f_goal') state.goal = v;
-        if(id === 'f_design') state.design_pref = v;
-        if(id === 'f_content') state.content_ready = v;
+        let needsRerender = false;
+        if(id === 'f_goal'){ state.goal = v; needsRerender = true; }
+        else if(id === 'f_design'){ state.design_pref = v; }
+        else if(id === 'f_content'){ state.content_ready = v; }
+        else if(id === 'f_domain'){ state.domain_status = v; }
+        else if(id === 'f_decision'){ state.decision_maker = v; }
+        else if(id === 'f_support'){ state.support_pref = v; }
+
+        if(needsRerender){ s.save(); renderStep(); return; }
         group.querySelectorAll('.radio-row').forEach(r=>r.classList.remove('active'));
         row.classList.add('active');
+        syncAriaStates();
       };
     });
   });
@@ -561,7 +779,7 @@ function showError(msg){
 async function handleNext(s, isLast){
   s.save();
   if(!s.valid()){
-    showError('Заполните обязательные поля выше');
+    showError('Заполните обязательные поля, отмеченные звёздочкой *');
     return;
   }
   if(!isLast){
@@ -581,6 +799,9 @@ async function submitBrief(){
 
   const text = buildMessage();
 
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 12000);
+
   try{
     const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
       method:'POST',
@@ -589,22 +810,23 @@ async function submitBrief(){
         chat_id: CHAT_ID,
         text: text,
         parse_mode: 'HTML'
-      })
+      }),
+      signal: controller.signal
     });
+    clearTimeout(timeoutId);
     const data = await res.json();
     if(!data.ok){ throw new Error(data.description || 'Ошибка отправки'); }
     showSuccess();
   } catch(err){
+    clearTimeout(timeoutId);
     btn.disabled = false;
     backBtn.disabled = false;
     btn.innerHTML = 'Отправить бриф';
-    showError('Не удалось отправить. Проверьте связь и попробуйте ещё раз.');
+    const msg = err.name === 'AbortError'
+      ? 'Сервер не ответил вовремя. Проверьте связь и попробуйте ещё раз.'
+      : 'Не удалось отправить. Проверьте связь и попробуйте ещё раз.';
+    showError(msg);
   }
-}
-
-function esc(s){
-  return (s||'').toString()
-    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
 function buildMessage(){
@@ -615,19 +837,29 @@ function buildMessage(){
   if(state.company) lines.push(`🏢 <b>Компания:</b> ${esc(state.company)}`);
   lines.push(`💬 <b>Связь:</b> ${esc(state.contact_type)} — ${esc(state.contact)}`);
   lines.push('');
-  lines.push(`🎯 <b>Цель:</b> ${esc(state.goal)}`);
+  lines.push(`🎯 <b>Цель:</b> ${esc(state.goal)}${state.goal==='Другое' && state.goal_other ? ' — ' + esc(state.goal_other) : ''}`);
   if(state.current_site) lines.push(`🔗 <b>Текущий сайт:</b> ${esc(state.current_site)}`);
   lines.push('');
   if(state.pages) lines.push(`📄 <b>Страниц:</b> ${esc(state.pages)}`);
   if(state.design_pref) lines.push(`🎨 <b>Дизайн:</b> ${esc(state.design_pref)}`);
   if(state.references) lines.push(`🖼 <b>Референсы:</b> ${esc(state.references)}`);
   lines.push('');
-  if(state.features.length) lines.push(`⚙️ <b>Функции:</b> ${esc(state.features.join(', '))}`);
+  if(state.features.length){
+    const featList = state.features.map(f => f==='Другое' && state.features_other ? `Другое (${state.features_other})` : f);
+    lines.push(`⚙️ <b>Функции:</b> ${esc(featList.join(', '))}`);
+  }
   if(state.integrations) lines.push(`🔌 <b>Интеграции:</b> ${esc(state.integrations)}`);
   lines.push('');
   if(state.content_ready) lines.push(`📦 <b>Контент:</b> ${esc(state.content_ready)}`);
   lines.push('');
-  if(state.budget) lines.push(`💰 <b>Бюджет:</b> ${esc(state.budget)}`);
+  if(state.domain_status) lines.push(`🌐 <b>Домен/хостинг:</b> ${esc(state.domain_status)}`);
+  if(state.tech_stack) lines.push(`🛠 <b>Платформа:</b> ${esc(state.tech_stack)}${state.tech_stack==='Другое' && state.tech_stack_other ? ' — ' + esc(state.tech_stack_other) : ''}`);
+  if(state.decision_maker) lines.push(`🧭 <b>Согласование:</b> ${esc(state.decision_maker)}`);
+  if(state.seo_needed) lines.push(`🔍 <b>SEO на старте:</b> ${esc(state.seo_needed)}`);
+  if(state.support_pref) lines.push(`💳 <b>Формат оплаты:</b> ${esc(state.support_pref)}`);
+  if(state.workflow_pref) lines.push(`💬 <b>Формат общения:</b> ${esc(state.workflow_pref)}`);
+  lines.push('');
+  if(state.budget) lines.push(`💰 <b>Бюджет:</b> ${esc(state.budget)}${state.budget==='Другое' && state.budget_other ? ' — ' + esc(state.budget_other) : ''}`);
   if(state.deadline) lines.push(`⏱ <b>Срок:</b> ${esc(state.deadline)}`);
   if(state.comment) { lines.push(''); lines.push(`📝 <b>Комментарий:</b> ${esc(state.comment)}`); }
   return lines.join('\n');
@@ -641,7 +873,7 @@ function showSuccess(){
     <div class="card success">
       <div class="success-icon">
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-          <path d="M4 12L9 17L20 6" stroke="#5eead4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4 12L9 17L20 6" stroke="var(--accent-text)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
       <h2>Бриф отправлен</h2>
@@ -649,6 +881,25 @@ function showSuccess(){
     </div>
   `;
 }
+
+// THEME
+function applyTheme(theme){
+  document.documentElement.setAttribute('data-theme', theme);
+  document.querySelectorAll('.theme-btn').forEach(b=>{
+    b.classList.toggle('active', b.dataset.theme === theme);
+  });
+  try{ localStorage.setItem('brief_theme', theme); }catch(e){}
+}
+
+document.querySelectorAll('.theme-btn').forEach(btn=>{
+  btn.onclick = () => applyTheme(btn.dataset.theme);
+});
+
+(function initTheme(){
+  let saved = null;
+  try{ saved = localStorage.getItem('brief_theme'); }catch(e){}
+  applyTheme(saved || 'dark');
+})();
 
 renderStep();
 </script>
