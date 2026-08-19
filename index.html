@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Бриф на разработку сайта</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0a0b0d;
+    --bg-elevated: #111318;
+    --border: #23262e;
+    --border-hover: #34394a;
+    --text: #e9eaec;
+    --text-dim: #8a8f9c;
+    --text-faint: #4d515c;
+    --accent: #5eead4;
+    --accent-dim: #163c37;
+    --error: #f87171;
+    --radius: 3px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Space Grotesk', sans-serif;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:0 20px;
+    position:relative;
+    overflow-x:hidden;
+  }
+  body::before{
+    content:'';
+    position:fixed;
+    inset:0;
+    background-image:
+      linear-gradient(rgba(94,234,212,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(94,234,212,0.025) 1px, transparent 1px);
+    background-size:48px 48px;
+    pointer-events:none;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black, transparent 70%);
+  }
+  .mono{font-family:'JetBrains Mono', monospace;}
+
+  /* HEADER */
+  .app{width:100%; max-width:640px; display:flex; flex-direction:column; min-height:100vh; position:relative; z-index:1;}
+  header{padding:48px 0 28px; }
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.12em;
+    color:var(--accent);
+    text-transform:uppercase;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:14px;
+  }
+  .eyebrow::before{content:''; width:6px; height:6px; background:var(--accent); border-radius:50%; box-shadow:0 0 8px var(--accent);}
+  h1{
+    font-size:clamp(28px, 5vw, 38px);
+    font-weight:700;
+    letter-spacing:-0.02em;
+    line-height:1.15;
+    margin-bottom:10px;
+  }
+  .subhead{color:var(--text-dim); font-size:15px; line-height:1.5; max-width:480px;}
+
+  /* PROGRESS */
+  .progress-wrap{margin:32px 0 8px;}
+  .progress-track{
+    height:2px;
+    background:var(--border);
+    border-radius:2px;
+    overflow:hidden;
+    position:relative;
+  }
+  .progress-fill{
+    height:100%;
+    background:var(--accent);
+    box-shadow:0 0 10px var(--accent);
+    transition:width 0.5s cubic-bezier(.65,0,.35,1);
+    border-radius:2px;
+  }
+  .progress-meta{
+    display:flex;
+    justify-content:space-between;
+    margin-top:10px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    color:var(--text-faint);
+    letter-spacing:0.04em;
+  }
+  .progress-meta .step-label{color:var(--text-dim);}
+
+  /* CARD / STEPS */
+  main{flex:1; display:flex; flex-direction:column; padding-bottom:40px;}
+  .card{
+    background:var(--bg-elevated);
+    border:1px solid var(--border);
+    border-radius:6px;
+    padding:32px 28px;
+    position:relative;
+    animation: fadeSlideIn 0.45s cubic-bezier(.2,.9,.3,1);
+  }
+  @keyframes fadeSlideIn{
+    from{opacity:0; transform:translateY(10px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  .step-num{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--accent);
+    letter-spacing:0.1em;
+    margin-bottom:6px;
+  }
+  .step-title{font-size:21px; font-weight:600; letter-spacing:-0.01em; margin-bottom:24px;}
+
+  .field{margin-bottom:22px;}
+  .field:last-child{margin-bottom:0;}
+  .field label{
+    display:block;
+    font-size:13px;
+    color:var(--text-dim);
+    margin-bottom:9px;
+    font-weight:500;
+  }
+  .field label .opt{color:var(--text-faint); font-weight:400;}
+  input[type=text], input[type=tel], input[type=email], textarea{
+    width:100%;
+    background:#0d0e12;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    color:var(--text);
+    font-family:'Space Grotesk', sans-serif;
+    font-size:15px;
+    padding:12px 14px;
+    transition:border-color 0.2s, background 0.2s;
+    resize:vertical;
+  }
+  textarea{min-height:88px; line-height:1.5;}
+  input::placeholder, textarea::placeholder{color:var(--text-faint);}
+  input:focus, textarea:focus{
+    outline:none;
+    border-color:var(--accent);
+    background:#0f1116;
+  }
+
+  .chip-group{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px;
+    padding:9px 14px;
+    border:1px solid var(--border);
+    border-radius:20px;
+    color:var(--text-dim);
+    cursor:pointer;
+    user-select:none;
+    transition: all 0.15s;
+    background:transparent;
+  }
+  .chip:hover{border-color:var(--border-hover); color:var(--text);}
+  .chip.active{
+    background:var(--accent-dim);
+    border-color:var(--accent);
+    color:var(--accent);
+  }
+
+  .radio-group{display:flex; flex-direction:column; gap:8px;}
+  .radio-row{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:12px 14px;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    cursor:pointer;
+    transition:border-color 0.15s, background 0.15s;
+  }
+  .radio-row:hover{border-color:var(--border-hover);}
+  .radio-row.active{border-color:var(--accent); background:var(--accent-dim);}
+  .radio-dot{
+    width:15px; height:15px; border-radius:50%;
+    border:1.5px solid var(--text-faint);
+    flex-shrink:0;
+    position:relative;
+    transition:border-color 0.15s;
+  }
+  .radio-row.active .radio-dot{border-color:var(--accent);}
+  .radio-row.active .radio-dot::after{
+    content:'';
+    position:absolute; inset:3px;
+    background:var(--accent);
+    border-radius:50%;
+  }
+  .radio-row span{font-size:14.5px; color:var(--text);}
+
+  /* NAV BUTTONS */
+  .nav-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:28px;
+    gap:12px;
+  }
+  button{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:14.5px;
+    border-radius:var(--radius);
+    padding:13px 22px;
+    cursor:pointer;
+    border:none;
+    transition:transform 0.1s, opacity 0.15s, box-shadow 0.2s;
+  }
+  button:active{transform:scale(0.97);}
+  .btn-primary{
+    background:var(--accent);
+    color:#04140f;
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+  }
+  .btn-primary:hover{box-shadow:0 0 20px rgba(94,234,212,0.25);}
+  .btn-primary:disabled{opacity:0.4; cursor:not-allowed; box-shadow:none;}
+  .btn-ghost{
+    background:transparent;
+    color:var(--text-dim);
+    border:1px solid var(--border);
+  }
+  .btn-ghost:hover{color:var(--text); border-color:var(--border-hover);}
+  .btn-ghost:disabled{opacity:0.3; cursor:not-allowed;}
+
+  /* SUCCESS SCREEN */
+  .success{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    padding:60px 20px;
+    animation: fadeSlideIn 0.5s ease;
+  }
+  .success-icon{
+    width:64px; height:64px;
+    border-radius:50%;
+    border:1.5px solid var(--accent);
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:24px;
+    box-shadow:0 0 30px rgba(94,234,212,0.15);
+  }
+  .success h2{font-size:24px; margin-bottom:10px; letter-spacing:-0.01em;}
+  .success p{color:var(--text-dim); font-size:14.5px; max-width:360px; line-height:1.55;}
+  .error-msg{
+    color:var(--error);
+    font-size:13px;
+    margin-top:14px;
+    font-family:'JetBrains Mono', monospace;
+    text-align:center;
+  }
+
+  footer{
+    padding:20px 0 32px;
+    text-align:center;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    color:var(--text-faint);
+    letter-spacing:0.05em;
+  }
+
+  .spinner{
+    width:16px; height:16px;
+    border:2px solid rgba(4,20,15,0.3);
+    border-top-color:#04140f;
+    border-radius:50%;
+    animation:spin 0.7s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  @media(max-width:480px){
+    .card{padding:26px 20px;}
+    header{padding:36px 0 22px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <header>
+    <div class="eyebrow">Приём проекта</div>
+    <h1>Бриф на разработку сайта</h1>
+    <p class="subhead">7 коротких шагов — примерно 3 минуты. Ответы уходят напрямую в работу, дублировать по почте не нужно.</p>
+  </header>
+
+  <div class="progress-wrap">
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:14.3%"></div></div>
+    <div class="progress-meta">
+      <span class="step-label" id="stepLabel">Шаг 1 из 7</span>
+      <span id="stepPercent">14%</span>
+    </div>
+  </div>
+
+  <main id="mainArea">
+    <!-- steps injected here -->
+  </main>
+
+  <footer>brief.protocol · заявки поступают в telegram в реальном времени</footer>
+</div>
+
+<script>
+const BOT_TOKEN = "8837687987:AAHJdF3PDfQ2ss3pXGuhDI8Fp1YBza68GYU";
+const CHAT_ID = "747866764";
+
+const state = {
+  name:'', contact_type:'Telegram', contact:'',
+  company:'', goal:'', current_site:'',
+  pages:'', design_pref:'', references:'',
+  features:[], integrations:'',
+  content_ready:'', budget:'', deadline:'',
+  comment:''
+};
+
+const steps = [
+  {
+    title:'Кто вы',
+    render: () => `
+      <div class="field">
+        <label>Имя</label>
+        <input type="text" id="f_name" placeholder="Как к вам обращаться" value="${state.name}">
+      </div>
+      <div class="field">
+        <label>Компания / проект <span class="opt">(необязательно)</span></label>
+        <input type="text" id="f_company" placeholder="Название" value="${state.company}">
+      </div>
+      <div class="field">
+        <label>Удобная связь</label>
+        <div class="chip-group" id="f_contact_type">
+          ${['Telegram','WhatsApp','Телефон','Email'].map(c=>`<div class="chip ${state.contact_type===c?'active':''}" data-val="${c}">${c}</div>`).join('')}
+        </div>
+      </div>
+      <div class="field">
+        <label>Контакт</label>
+        <input type="text" id="f_contact" placeholder="@username, номер или email" value="${state.contact}">
+      </div>
+    `,
+    save: () => {
+      state.name = val('f_name');
+      state.company = val('f_company');
+      state.contact = val('f_contact');
+    },
+    valid: () => state.name.trim() && state.contact.trim()
+  },
+  {
+    title:'Цель сайта',
+    render: () => `
+      <div class="field">
+        <label>Зачем нужен сайт</label>
+        <div class="radio-group" id="f_goal">
+          ${['Продажи / заявки','Каталог товаров','Портфолио / визитка','Информационный / блог','Сервис / личный кабинет','Другое'].map(g=>`
+            <div class="radio-row ${state.goal===g?'active':''}" data-val="${g}">
+              <div class="radio-dot"></div><span>${g}</span>
+            </div>`).join('')}
+        </div>
+      </div>
+      <div class="field">
+        <label>Сайт сейчас есть? <span class="opt">(ссылка, если да)</span></label>
+        <input type="text" id="f_current" placeholder="example.com или «нет»" value="${state.current_site}">
+      </div>
+    `,
+    save: () => { state.current_site = val('f_current'); },
+    valid: () => !!state.goal
+  },
+  {
+    title:'Объём и стиль',
+    render: () => `
+      <div class="field">
+        <label>Сколько страниц примерно</label>
+        <div class="chip-group" id="f_pages">
+          ${['Одна (лендинг)','2–5','6–15','15+','Не знаю'].map(p=>`<div class="chip ${state.pages===p?'active':''}" data-val="${p}">${p}</div>`).join('')}
+        </div>
+      </div>
+      <div class="field">
+        <label>Дизайн</label>
+        <div class="radio-group" id="f_design">
+          ${['Уникальный дизайн с нуля','Готовый шаблон / конструктор','Пока не решил(а)'].map(d=>`
+            <div class="radio-row ${state.design_pref===d?'active':''}" data-val="${d}">
+              <div class="radio-dot"></div><span>${d}</span>
+            </div>`).join('')}
+        </div>
+      </div>
+      <div class="field">
+        <label>Референсы <span class="opt">(сайты, которые нравятся)</span></label>
+        <textarea id="f_refs" placeholder="Ссылки или описание стиля">${state.references}</textarea>
+      </div>
+    `,
+    save: () => { state.references = val('f_refs'); },
+    valid: () => true
+  },
+  {
+    title:'Функционал',
+    render: () => `
+      <div class="field">
+        <label>Что должно быть на сайте <span class="opt">(можно несколько)</span></label>
+        <div class="chip-group" id="f_features">
+          ${['Каталог/корзина','Онлайн-оплата','Личный кабинет','Форма заявки','Блог/новости','Многоязычность','Интеграция с CRM','Онлайн-запись'].map(f=>`<div class="chip ${state.features.includes(f)?'active':''}" data-val="${f}">${f}</div>`).join('')}
+        </div>
+      </div>
+      <div class="field">
+        <label>Интеграции <span class="opt">(CRM, платёжка, аналитика — если известно)</span></label>
+        <input type="text" id="f_integrations" placeholder="Например: Bitrix24, ЮKassa" value="${state.integrations}">
+      </div>
+    `,
+    save: () => { state.integrations = val('f_integrations'); },
+    valid: () => true
+  },
+  {
+    title:'Контент',
+    render: () => `
+      <div class="field">
+        <label>Тексты, фото, логотип — готовы?</label>
+        <div class="radio-group" id="f_content">
+          ${['Всё готово','Частично готово','Нужна помощь с наполнением'].map(c=>`
+            <div class="radio-row ${state.content_ready===c?'active':''}" data-val="${c}">
+              <div class="radio-dot"></div><span>${c}</span>
+            </div>`).join('')}
+        </div>
+      </div>
+    `,
+    save: () => {},
+    valid: () => !!state.content_ready
+  },
+  {
+    title:'Бюджет и сроки',
+    render: () => `
+      <div class="field">
+        <label>Бюджет</label>
+        <div class="chip-group" id="f_budget">
+          ${['до 100 000 ₽','100–300 000 ₽','300–700 000 ₽','700 000+ ₽','Обсудим'].map(b=>`<div class="chip ${state.budget===b?'active':''}" data-val="${b}">${b}</div>`).join('')}
+        </div>
+      </div>
+      <div class="field">
+        <label>Желаемый срок запуска</label>
+        <input type="text" id="f_deadline" placeholder="Например: до 15 октября или «не горит»" value="${state.deadline}">
+      </div>
+    `,
+    save: () => { state.deadline = val('f_deadline'); },
+    valid: () => true
+  },
+  {
+    title:'Последнее',
+    render: () => `
+      <div class="field">
+        <label>Комментарий <span class="opt">(всё, что важно добавить)</span></label>
+        <textarea id="f_comment" placeholder="Свободное поле" style="min-height:120px;">${state.comment}</textarea>
+      </div>
+    `,
+    save: () => { state.comment = val('f_comment'); },
+    valid: () => true
+  }
+];
+
+let current = 0;
+const mainArea = document.getElementById('mainArea');
+const progressFill = document.getElementById('progressFill');
+const stepLabel = document.getElementById('stepLabel');
+const stepPercent = document.getElementById('stepPercent');
+
+function val(id){ const el = document.getElementById(id); return el ? el.value : ''; }
+
+function renderStep(){
+  const s = steps[current];
+  const pct = Math.round(((current+1)/steps.length)*100);
+  progressFill.style.width = pct + '%';
+  stepLabel.textContent = `Шаг ${current+1} из ${steps.length}`;
+  stepPercent.textContent = pct + '%';
+
+  const isLast = current === steps.length - 1;
+
+  mainArea.innerHTML = `
+    <div class="card">
+      <div class="step-num mono">РАЗДЕЛ ${String(current+1).padStart(2,'0')}</div>
+      <div class="step-title">${s.title}</div>
+      ${s.render()}
+      <div class="nav-row">
+        <button class="btn-ghost" id="btnBack" ${current===0?'disabled':''}>Назад</button>
+        <button class="btn-primary" id="btnNext">${isLast ? 'Отправить бриф' : 'Далее'}</button>
+      </div>
+      <div class="error-msg" id="errorMsg" style="display:none;"></div>
+    </div>
+  `;
+
+  wireInteractive();
+
+  document.getElementById('btnBack').onclick = () => {
+    s.save();
+    if(current>0){ current--; renderStep(); }
+  };
+  document.getElementById('btnNext').onclick = () => handleNext(s, isLast);
+}
+
+function wireInteractive(){
+  // chip groups (multi or single depending on field)
+  document.querySelectorAll('.chip-group').forEach(group => {
+    const id = group.id;
+    group.querySelectorAll('.chip').forEach(chip => {
+      chip.onclick = () => {
+        const v = chip.dataset.val;
+        if(id === 'f_contact_type'){
+          state.contact_type = v;
+          group.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+          chip.classList.add('active');
+        } else if(id === 'f_pages'){
+          state.pages = v;
+          group.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+          chip.classList.add('active');
+        } else if(id === 'f_budget'){
+          state.budget = v;
+          group.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+          chip.classList.add('active');
+        } else if(id === 'f_features'){
+          if(state.features.includes(v)){
+            state.features = state.features.filter(x=>x!==v);
+            chip.classList.remove('active');
+          } else {
+            state.features.push(v);
+            chip.classList.add('active');
+          }
+        }
+      };
+    });
+  });
+
+  // radio groups
+  document.querySelectorAll('.radio-group').forEach(group => {
+    const id = group.id;
+    group.querySelectorAll('.radio-row').forEach(row => {
+      row.onclick = () => {
+        const v = row.dataset.val;
+        if(id === 'f_goal') state.goal = v;
+        if(id === 'f_design') state.design_pref = v;
+        if(id === 'f_content') state.content_ready = v;
+        group.querySelectorAll('.radio-row').forEach(r=>r.classList.remove('active'));
+        row.classList.add('active');
+      };
+    });
+  });
+}
+
+function showError(msg){
+  const el = document.getElementById('errorMsg');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+async function handleNext(s, isLast){
+  s.save();
+  if(!s.valid()){
+    showError('Заполните обязательные поля выше');
+    return;
+  }
+  if(!isLast){
+    current++;
+    renderStep();
+    return;
+  }
+  await submitBrief();
+}
+
+async function submitBrief(){
+  const btn = document.getElementById('btnNext');
+  const backBtn = document.getElementById('btnBack');
+  btn.disabled = true;
+  backBtn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Отправка...';
+
+  const text = buildMessage();
+
+  try{
+    const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        chat_id: CHAT_ID,
+        text: text,
+        parse_mode: 'HTML'
+      })
+    });
+    const data = await res.json();
+    if(!data.ok){ throw new Error(data.description || 'Ошибка отправки'); }
+    showSuccess();
+  } catch(err){
+    btn.disabled = false;
+    backBtn.disabled = false;
+    btn.innerHTML = 'Отправить бриф';
+    showError('Не удалось отправить. Проверьте связь и попробуйте ещё раз.');
+  }
+}
+
+function esc(s){
+  return (s||'').toString()
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function buildMessage(){
+  const lines = [];
+  lines.push('🆕 <b>Новый бриф на сайт</b>');
+  lines.push('');
+  lines.push(`👤 <b>Имя:</b> ${esc(state.name)}`);
+  if(state.company) lines.push(`🏢 <b>Компания:</b> ${esc(state.company)}`);
+  lines.push(`💬 <b>Связь:</b> ${esc(state.contact_type)} — ${esc(state.contact)}`);
+  lines.push('');
+  lines.push(`🎯 <b>Цель:</b> ${esc(state.goal)}`);
+  if(state.current_site) lines.push(`🔗 <b>Текущий сайт:</b> ${esc(state.current_site)}`);
+  lines.push('');
+  if(state.pages) lines.push(`📄 <b>Страниц:</b> ${esc(state.pages)}`);
+  if(state.design_pref) lines.push(`🎨 <b>Дизайн:</b> ${esc(state.design_pref)}`);
+  if(state.references) lines.push(`🖼 <b>Референсы:</b> ${esc(state.references)}`);
+  lines.push('');
+  if(state.features.length) lines.push(`⚙️ <b>Функции:</b> ${esc(state.features.join(', '))}`);
+  if(state.integrations) lines.push(`🔌 <b>Интеграции:</b> ${esc(state.integrations)}`);
+  lines.push('');
+  if(state.content_ready) lines.push(`📦 <b>Контент:</b> ${esc(state.content_ready)}`);
+  lines.push('');
+  if(state.budget) lines.push(`💰 <b>Бюджет:</b> ${esc(state.budget)}`);
+  if(state.deadline) lines.push(`⏱ <b>Срок:</b> ${esc(state.deadline)}`);
+  if(state.comment) { lines.push(''); lines.push(`📝 <b>Комментарий:</b> ${esc(state.comment)}`); }
+  return lines.join('\n');
+}
+
+function showSuccess(){
+  progressFill.style.width = '100%';
+  stepPercent.textContent = '100%';
+  stepLabel.textContent = 'Готово';
+  mainArea.innerHTML = `
+    <div class="card success">
+      <div class="success-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+          <path d="M4 12L9 17L20 6" stroke="#5eead4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h2>Бриф отправлен</h2>
+      <p>Спасибо, ${esc(state.name)}. Заявка уже в работе — свяжусь с вами через ${esc(state.contact_type)} в ближайшее время.</p>
+    </div>
+  `;
+}
+
+renderStep();
+</script>
+
+</body>
+</html>
