@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Домен и хостинг — справочник цен РФ 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0a0b0d;
+    --bg-elevated: #111318;
+    --border: #23262e;
+    --border-hover: #34394a;
+    --text: #e9eaec;
+    --text-dim: #8a8f9c;
+    --text-faint: #4d515c;
+    --accent-text: #5eead4;
+    --accent-dim: #163c37;
+    --warn: #fbbf24;
+    --warn-dim: rgba(251,191,36,0.08);
+    --radius: 3px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Space Grotesk', sans-serif;
+    min-height:100vh;
+    padding:0 20px 60px;
+    display:flex;
+    justify-content:center;
+  }
+  .wrap{width:100%; max-width:900px;}
+  header{padding:44px 0 32px;}
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.12em;
+    color:var(--accent-text);
+    text-transform:uppercase;
+    display:flex; align-items:center; gap:8px;
+    margin-bottom:14px;
+  }
+  .eyebrow::before{content:''; width:6px; height:6px; background:var(--accent-text); border-radius:50%; box-shadow:0 0 8px var(--accent-text);}
+  h1{font-size:clamp(24px,4vw,32px); font-weight:700; letter-spacing:-0.02em; margin-bottom:8px;}
+  .subhead{color:var(--text-dim); font-size:14px; line-height:1.55; max-width:620px;}
+
+  .alert{
+    margin-top:20px;
+    background:var(--warn-dim);
+    border:1px solid rgba(251,191,36,0.3);
+    border-radius:var(--radius);
+    padding:14px 16px;
+    font-size:13px;
+    line-height:1.55;
+    color:var(--warn);
+    display:flex;
+    gap:10px;
+  }
+  .alert svg{flex-shrink:0; margin-top:1px;}
+  .alert b{color:var(--text);}
+
+  section{margin-bottom:36px;}
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    margin-bottom:14px;
+  }
+  .section-num{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--accent-text);
+    letter-spacing:0.1em;
+  }
+  h2{font-size:18px; font-weight:600; letter-spacing:-0.01em;}
+  .section-note{font-size:13px; color:var(--text-dim); margin-bottom:16px; line-height:1.5;}
+
+  table{
+    width:100%;
+    border-collapse:collapse;
+    background:var(--bg-elevated);
+    border:1px solid var(--border);
+    border-radius:6px;
+    overflow:hidden;
+  }
+  thead th{
+    text-align:left;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    padding:12px 16px;
+    border-bottom:1px solid var(--border);
+    font-weight:500;
+  }
+  tbody td{
+    padding:13px 16px;
+    font-size:14px;
+    border-bottom:1px solid var(--border);
+    color:var(--text);
+  }
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:hover{background:rgba(255,255,255,0.02);}
+  td.price{
+    font-family:'JetBrains Mono', monospace;
+    color:var(--accent-text);
+    white-space:nowrap;
+  }
+  td.dim{color:var(--text-dim); font-size:13px;}
+  .zone-tag{
+    font-family:'JetBrains Mono', monospace;
+    font-weight:600;
+    font-size:13px;
+  }
+  .badge{
+    display:inline-block;
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    padding:2px 7px;
+    border-radius:10px;
+    background:var(--accent-dim);
+    color:var(--accent-text);
+    margin-left:6px;
+    letter-spacing:0.02em;
+  }
+  .badge.popular{background:rgba(251,191,36,0.12); color:var(--warn);}
+
+  .provider-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:14px;
+  }
+  .provider-chip{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    padding:6px 12px;
+    border:1px solid var(--border);
+    border-radius:16px;
+    color:var(--text-dim);
+  }
+
+  .disclaimer{
+    margin-top:40px;
+    font-size:12px;
+    color:var(--text-faint);
+    line-height:1.6;
+    border-top:1px solid var(--border);
+    padding-top:18px;
+  }
+
+  @media(max-width:600px){
+    thead{display:none;}
+    table, tbody, tr, td{display:block; width:100%;}
+    tbody tr{border-bottom:1px solid var(--border); padding:12px 16px;}
+    tbody td{border-bottom:none; padding:4px 0; display:flex; justify-content:space-between; gap:12px;}
+    tbody td::before{
+      content:attr(data-label);
+      font-family:'JetBrains Mono', monospace;
+      font-size:10px;
+      text-transform:uppercase;
+      color:var(--text-faint);
+      letter-spacing:0.05em;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Внутренний справочник · не для клиента</div>
+    <h1>Домен и хостинг: цены в РФ</h1>
+    <p class="subhead">Ориентировочные цены на регистрацию доменов и хостинг у российских провайдеров на 2026 год. Используй для быстрых ответов клиенту про «что почём», если он спросит на брифе.</p>
+  </header>
+
+  <div class="alert">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    <span><b>Важно с 1 сентября 2026:</b> для доменов в зонах <b>.ru, .рф, .su</b> обязательна идентификация владельца через ЕСИА (Госуслуги). Без подтверждённой учётной записи зарегистрировать такой домен не получится — предупреждай клиента заранее, если это его первый домен.</span>
+  </div>
+
+  <section>
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <h2>Регистрация домена — по зонам</h2>
+    </div>
+    <p class="section-note">Первый год почти всегда дешевле за счёт акций — реальная стоимость видна на продлении. Ориентируйся на цену продления как на настоящую годовую стоимость владения.</p>
+    <table>
+      <thead>
+        <tr><th>Зона</th><th>Регистрация (1 год)</th><th>Продление (год)</th><th>Комментарий</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Зона"><span class="zone-tag">.ru</span><span class="badge popular">чаще всего</span></td>
+          <td data-label="Регистрация" class="price">~170–230 ₽</td>
+          <td data-label="Продление" class="price">~800–1 200 ₽</td>
+          <td data-label="Комментарий" class="dim">Требует ЕСИА с 09.2026</td>
+        </tr>
+        <tr>
+          <td data-label="Зона"><span class="zone-tag">.рф</span></td>
+          <td data-label="Регистрация" class="price">~170–230 ₽</td>
+          <td data-label="Продление" class="price">~800–1 200 ₽</td>
+          <td data-label="Комментарий" class="dim">Кириллица, требует ЕСИА</td>
+        </tr>
+        <tr>
+          <td data-label="Зона"><span class="zone-tag">.com</span><span class="badge popular">международный</span></td>
+          <td data-label="Регистрация" class="price">~800–1 200 ₽</td>
+          <td data-label="Продление" class="price">~1 200–1 800 ₽</td>
+          <td data-label="Комментарий" class="dim">Курс валюты влияет на цену</td>
+        </tr>
+        <tr>
+          <td data-label="Зона"><span class="zone-tag">.site / .online</span></td>
+          <td data-label="Регистрация" class="price">~50–200 ₽</td>
+          <td data-label="Продление" class="price">~1 500–2 500 ₽</td>
+          <td data-label="Комментарий" class="dim">Дешёвый вход, дороже продление</td>
+        </tr>
+        <tr>
+          <td data-label="Зона"><span class="zone-tag">.store / .shop</span></td>
+          <td data-label="Регистрация" class="price">~300–900 ₽</td>
+          <td data-label="Продление" class="price">~2 500–3 500 ₽</td>
+          <td data-label="Комментарий" class="dim">Для интернет-магазинов</td>
+        </tr>
+        <tr>
+          <td data-label="Зона"><span class="zone-tag">.su</span></td>
+          <td data-label="Регистрация" class="price">~600–900 ₽</td>
+          <td data-label="Продление" class="price">~900–1 200 ₽</td>
+          <td data-label="Комментарий" class="dim">Требует ЕСИА с 09.2026</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="provider-list">
+      <span class="provider-chip">REG.RU</span>
+      <span class="provider-chip">Timeweb</span>
+      <span class="provider-chip">Beget</span>
+      <span class="provider-chip">Webnames</span>
+      <span class="provider-chip">Sprinthost</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <h2>Виртуальный хостинг (shared)</h2>
+    </div>
+    <p class="section-note">Подходит для лендингов, визиток, небольших каталогов и WordPress-сайтов с умеренной посещаемостью (до ~5–10 тыс. визитов/мес).</p>
+    <table>
+      <thead>
+        <tr><th>Тариф</th><th>Цена/мес</th><th>Что входит</th><th>Кому подходит</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Тариф">Минимальный</td>
+          <td data-label="Цена" class="price">150–300 ₽</td>
+          <td data-label="Что входит" class="dim">1 сайт, 5–10 ГБ, SSL</td>
+          <td data-label="Кому подходит" class="dim">Лендинг, визитка</td>
+        </tr>
+        <tr>
+          <td data-label="Тариф">Стандартный<span class="badge popular">оптимально</span></td>
+          <td data-label="Цена" class="price">300–600 ₽</td>
+          <td data-label="Что входит" class="dim">Неск. сайтов, 20–50 ГБ, почта</td>
+          <td data-label="Кому подходит" class="dim">Корп. сайт, каталог, блог</td>
+        </tr>
+        <tr>
+          <td data-label="Тариф">Расширенный</td>
+          <td data-label="Цена" class="price">600–1200 ₽</td>
+          <td data-label="Что входит" class="dim">Больше ресурсов, приоритетная поддержка</td>
+          <td data-label="Кому подходит" class="dim">Средний интернет-магазин</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="provider-list">
+      <span class="provider-chip">Timeweb</span>
+      <span class="provider-chip">Beget</span>
+      <span class="provider-chip">REG.RU</span>
+      <span class="provider-chip">Sprinthost</span>
+      <span class="provider-chip">SpaceWeb</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <h2>VPS / VDS (виртуальный выделенный сервер)</h2>
+    </div>
+    <p class="section-note">Нужен, когда сайту тесно на shared-хостинге: высокая посещаемость, самописный бэкенд, несколько сервисов, кастомные настройки сервера.</p>
+    <table>
+      <thead>
+        <tr><th>Конфигурация</th><th>Цена/мес</th><th>Комментарий</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Конфигурация">1 CPU / 1–2 ГБ RAM</td>
+          <td data-label="Цена" class="price">300–600 ₽</td>
+          <td data-label="Комментарий" class="dim">Небольшой сайт с ростом трафика</td>
+        </tr>
+        <tr>
+          <td data-label="Конфигурация">2 CPU / 4 ГБ RAM<span class="badge popular">частый выбор</span></td>
+          <td data-label="Цена" class="price">800–1500 ₽</td>
+          <td data-label="Комментарий" class="dim">Интернет-магазин, сервис с нагрузкой</td>
+        </tr>
+        <tr>
+          <td data-label="Конфигурация">4 CPU / 8 ГБ RAM</td>
+          <td data-label="Цена" class="price">2000–4000 ₽</td>
+          <td data-label="Комментарий" class="dim">Высоконагруженный проект</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="provider-list">
+      <span class="provider-chip">Timeweb Cloud</span>
+      <span class="provider-chip">REG.RU Cloud</span>
+      <span class="provider-chip">Selectel</span>
+      <span class="provider-chip">Beget Cloud</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <span class="section-num">04</span>
+      <h2>Выделенный сервер (dedicated)</h2>
+    </div>
+    <p class="section-note">Только для крупных проектов с большой нагрузкой — редко нужен на старте, не стоит предлагать клиенту без явной причины.</p>
+    <table>
+      <thead>
+        <tr><th>Конфигурация</th><th>Цена/мес</th><th>Комментарий</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Конфигурация">Базовый выделенный сервер</td>
+          <td data-label="Цена" class="price">10 000–25 000 ₽</td>
+          <td data-label="Комментарий" class="dim">Надёжно, для сайтов с высокой посещаемостью</td>
+        </tr>
+        <tr>
+          <td data-label="Конфигурация">Мощный сервер</td>
+          <td data-label="Цена" class="price">25 000–100 000+ ₽</td>
+          <td data-label="Комментарий" class="dim">Крупные проекты, высокие нагрузки</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <span class="section-num">05</span>
+      <h2>Сопутствующие расходы</h2>
+    </div>
+    <table>
+      <thead>
+        <tr><th>Услуга</th><th>Цена</th><th>Комментарий</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Услуга">SSL-сертификат (базовый DV)</td>
+          <td data-label="Цена" class="price">Бесплатно – 2 000 ₽/год</td>
+          <td data-label="Комментарий" class="dim">Часто идёт бесплатно с хостингом (Let's Encrypt)</td>
+        </tr>
+        <tr>
+          <td data-label="Услуга">SSL Wildcard (для поддоменов)</td>
+          <td data-label="Цена" class="price">1 500–3 000 ₽/год</td>
+          <td data-label="Комментарий" class="dim">Нужен при множестве поддоменов</td>
+        </tr>
+        <tr>
+          <td data-label="Услуга">Корпоративная почта на домене</td>
+          <td data-label="Цена" class="price">Бесплатно – 300 ₽/мес</td>
+          <td data-label="Комментарий" class="dim">Яндекс 360/Mail.ru — бесплатно для малого бизнеса</td>
+        </tr>
+        <tr>
+          <td data-label="Услуга">Резервное копирование (бэкапы)</td>
+          <td data-label="Цена" class="price">Часто включено</td>
+          <td data-label="Комментарий" class="dim">Проверять у провайдера отдельно</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="disclaimer">
+    Цены собраны из открытых источников (REG.RU, Timeweb, Beget, Webnames, SpaceWeb) на середину 2026 года и являются ориентировочными — у каждого провайдера свои акции, скидки при оплате за несколько лет и партнёрские программы. Итоговая цена для клиента может отличаться. Курс валюты влияет на международные зоны (.com, .net и т.д.). Актуальные цены и акции всегда стоит проверять на сайте выбранного провайдера перед тем, как называть цифру клиенту.
+  </div>
+</div>
+</body>
+</html>
